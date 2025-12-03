@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-// import Header from "./components/layout/Header.vue";
+
 import { useAuthStore } from "./stores/auth";
 
 const authStore = useAuthStore();

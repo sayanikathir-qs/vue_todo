@@ -55,7 +55,7 @@ const submitLogin = async () => {
   const valid = await form.value.validate();
   if (!valid.valid) return;
 
-  // Update store with form data before logging in
+ 
   auth.loginFormData.username = auth.loginFormData.username;
   auth.loginFormData.password = auth.loginFormData.password;
   
