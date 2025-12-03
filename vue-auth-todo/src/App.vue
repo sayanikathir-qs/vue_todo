@@ -1,7 +1,6 @@
 
 <template>
   <v-app>
-    <Navbar v-if="auth.token" />
       <v-main>
       <router-view />
     </v-main>
@@ -9,8 +8,8 @@
 </template>
 
 <script setup>
-import Header from "./components/layout/Header.vue";
-import { useAuthStore } from "./stores/authStore";
+// import Header from "./components/layout/Header.vue";
+import { useAuthStore } from "./stores/auth";
 
 const authStore = useAuthStore();
 

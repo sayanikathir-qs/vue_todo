@@ -1,5 +1,6 @@
 import { registerPlugins } from '@/plugins'
 import '@/assets/main.css'
+import 'uno.css'
 
 // Components
 import App from './App.vue'
@@ -8,7 +9,7 @@ import App from './App.vue'
 import { createApp } from 'vue'
 
 // Styles
-import 'unfonts.css'
+
 
 const app = createApp(App)
 

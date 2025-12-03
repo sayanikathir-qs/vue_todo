@@ -2,7 +2,7 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth';
 
-const authstore = UseAuthStore ()
+const authStore = useAuthStore()
 </script>
 
 <template>

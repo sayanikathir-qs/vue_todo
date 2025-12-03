@@ -1,8 +1,17 @@
-import { apiClient } from "@/utils/api";
+import { api } from "@/utils/api";
 import { defineStore } from "pinia";
-import { computed, reactive, ref } from "vue";
-import router from "@/plugins/router";
+import { ref } from "vue";
 
-export const useAuthStore = defineStore('auth', () => {
-    let tasks = reactive()
+export const useTaskStore = defineStore('task', () => {
+    let tasks = ref([])
+    
+    function addTask(task) {
+        tasks.value.push(task)
+    }
+    
+    function removeTask(id) {
+        tasks.value = tasks.value.filter(t => t.id !== id)
+    }
+    
+    return { tasks, addTask, removeTask }
 })

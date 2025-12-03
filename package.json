@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@unocss/reset": "^66.5.10",
     "pinia": "^3.0.4",
     "vue-cookies": "^1.8.6",
     "vue-router": "^4.6.3"
