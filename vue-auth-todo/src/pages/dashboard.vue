@@ -37,81 +37,85 @@ const deleteTask = (id) => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div>
     <Header />
     
-    <div class="max-w-4xl mx-auto px-4 py-8">
+    <v-container fluid class="py-8 bg-grey-lighten-5">
       <!-- Welcome Section -->
-      <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">Welcome, {{ authStore.user?.firstName }}!</h1>
-        <p class="text-gray-600">Manage your tasks efficiently</p>
-      </div>
+      <v-card class="mb-6">
+        <v-card-text>
+          <h1 class="text-h4 font-weight-bold mb-2">Welcome, {{ authStore.user?.firstName }}!</h1>
+          <p class="text-body1 text-grey-darken-1">Manage your tasks efficiently</p>
+        </v-card-text>
+      </v-card>
 
       <!-- Add Task Section -->
-      <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-        <div v-if="!showForm" class="flex justify-between items-center">
-          <h2 class="text-xl font-semibold text-gray-800">My Tasks</h2>
-          <v-btn
-            color="primary"
-            size="large"
-            @click="showForm = true"
-          >
-            + Add Task
-          </v-btn>
-        </div>
-
-        <div v-else>
-          <h2 class="text-xl font-semibold text-gray-800 mb-4">Create New Task</h2>
-          <div class="flex gap-3">
-            <v-text-field
-              v-model="newTask"
-              label="Task title"
-              placeholder="Enter your task..."
-              density="compact"
-              class="flex-1"
-              @keyup.enter="addTask"
-            />
+      <v-card class="mb-6">
+        <v-card-text>
+          <div v-if="!showForm" class="d-flex justify-space-between align-center">
+            <h2 class="text-h6 font-weight-semibold">My Tasks</h2>
             <v-btn
               color="primary"
-              @click="addTask"
-              :disabled="!newTask.trim()"
+              size="large"
+              @click="showForm = true"
             >
-              Add
-            </v-btn>
-            <v-btn
-              variant="outlined"
-              @click="showForm = false"
-            >
-              Cancel
+              + Add Task
             </v-btn>
           </div>
-        </div>
-      </div>
+
+          <div v-else>
+            <h2 class="text-h6 font-weight-semibold mb-4">Create New Task</h2>
+            <div class="d-flex gap-3">
+              <v-text-field
+                v-model="newTask"
+                label="Task title"
+                placeholder="Enter your task..."
+                density="compact"
+                class="flex-grow-1"
+                @keyup.enter="addTask"
+              />
+              <v-btn
+                color="primary"
+                @click="addTask"
+                :disabled="!newTask.trim()"
+              >
+                Add
+              </v-btn>
+              <v-btn
+                variant="outlined"
+                @click="showForm = false"
+              >
+                Cancel
+              </v-btn>
+            </div>
+          </div>
+        </v-card-text>
+      </v-card>
 
       <!-- Tasks List -->
-      <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-        <div v-if="taskStore.tasks.length === 0" class="p-8 text-center">
-          <p class="text-gray-500 text-lg">No tasks yet. Create one to get started!</p>
+      <v-card>
+        <div v-if="taskStore.tasks.length === 0" class="pa-8 text-center">
+          <p class="text-body1 text-grey-darken-1">No tasks yet. Create one to get started!</p>
         </div>
 
         <div v-else>
-          <div class="divide-y">
-            <div
-              v-for="task in taskStore.tasks"
-              :key="task.id"
-              class="p-4 flex items-center justify-between hover:bg-gray-50 transition"
-            >
-              <div class="flex items-center gap-4 flex-1">
+          <v-divider />
+          <div
+            v-for="task in taskStore.tasks"
+            :key="task.id"
+          >
+            <v-card-text class="d-flex align-center justify-space-between pa-4">
+              <div class="d-flex align-center gap-4 flex-grow-1">
                 <v-checkbox
                   :model-value="task.completed"
                   @update:model-value="toggleTask(task.id)"
                   color="primary"
                 />
-                <div class="flex-1">
-                  <p :class="['text-lg font-medium', task.completed ? 'line-through text-gray-400' : 'text-gray-800']">
+                <div class="flex-grow-1">
+                  <p :class="['text-body1 font-weight-medium', task.completed ? 'text-decoration-line-through text-grey-darken-1' : 'text-grey-darken-3']">
                     {{ task.title }}
                   </p>
-                  <p class="text-sm text-gray-500">{{ task.createdAt }}</p>
+                  <p class="text-caption text-grey-darken-1">{{ task.createdAt }}</p>
                 </div>
               </div>
               <v-btn
@@ -120,29 +124,30 @@ const deleteTask = (id) => {
                 color="error"
                 @click="deleteTask(task.id)"
               />
-            </div>
+            </v-card-text>
+            <v-divider />
           </div>
 
           <!-- Task Statistics -->
-          <div class="bg-gray-50 p-4 flex gap-6 border-t">
+          <v-card-text class="bg-grey-lighten-4 d-flex gap-8 pa-4">
             <div>
-              <p class="text-gray-600 text-sm">Total Tasks</p>
-              <p class="text-2xl font-bold text-gray-800">{{ taskStore.tasks.length }}</p>
+              <p class="text-caption text-grey-darken-1">Total Tasks</p>
+              <p class="text-h6 font-weight-bold text-grey-darken-3">{{ taskStore.tasks.length }}</p>
             </div>
             <div>
-              <p class="text-gray-600 text-sm">Completed</p>
-              <p class="text-2xl font-bold text-green-600">{{ taskStore.tasks.filter(t => t.completed).length }}</p>
+              <p class="text-caption text-grey-darken-1">Completed</p>
+              <p class="text-h6 font-weight-bold" style="color: #4caf50;">{{ taskStore.tasks.filter(t => t.completed).length }}</p>
             </div>
             <div>
-              <p class="text-gray-600 text-sm">Pending</p>
-              <p class="text-2xl font-bold text-blue-600">{{ taskStore.tasks.filter(t => !t.completed).length }}</p>
+              <p class="text-caption text-grey-darken-1">Pending</p>
+              <p class="text-h6 font-weight-bold text-primary">{{ taskStore.tasks.filter(t => !t.completed).length }}</p>
             </div>
-          </div>
+          </v-card-text>
         </div>
-      </div>
+      </v-card>
 
       <!-- Logout Button -->
-      <div class="mt-8 flex justify-center">
+      <div class="mt-8 text-center">
         <v-btn
           color="error"
           size="large"
@@ -151,7 +156,7 @@ const deleteTask = (id) => {
           Logout
         </v-btn>
       </div>
-    </div>
+    </v-container>
   </div>
 </template>
 

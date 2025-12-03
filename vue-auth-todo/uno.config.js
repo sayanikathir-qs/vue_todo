@@ -7,4 +7,9 @@ export default defineConfig({
     presetWind(),
     presetIcons(),
   ],
+  content: {
+    pipeline: {
+      include: [/\.(vue|jsx?|tsx?|html)($|\?)/],
+    },
+  },
 })

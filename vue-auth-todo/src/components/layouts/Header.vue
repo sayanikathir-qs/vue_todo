@@ -5,7 +5,7 @@
         icon="mdi-checkbox-marked-circle-plus-outline"
         size="large"
       />
-      <span class="text-white font-bold text-lg">Todo Manager</span>
+      <span class="text-white font-bold text-lg">Todo App</span>
     </v-app-bar-title>
   </v-app-bar>
 </template>

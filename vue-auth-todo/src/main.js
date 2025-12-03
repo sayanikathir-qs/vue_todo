@@ -1,6 +1,5 @@
 import { registerPlugins } from '@/plugins'
 import '@/assets/main.css'
-import 'uno.css'
 
 // Components
 import App from './App.vue'

@@ -18,6 +18,22 @@ export default createVuetify({
   components,
   directives,
 
+  theme: {
+    themes: {
+      light: {
+        colors: {
+          primary: '#272829ff',      // Change this color
+          secondary: '#424242',
+          accent: '#82b1ff',
+          error: '#ff5252',
+          warning: '#ffc107',
+          info: '#2196f3',
+          success: '#4caf50',
+        },
+      },
+    },
+  },
+
   icons: {
     defaultSet: "mdi",
     aliases,
