@@ -11,10 +11,10 @@ export const useAuthStore = defineStore("auth", {
 
   actions: {
     async login(username, password) {
-      // Call the API function
+     
       const data = await loginApi({ username, password });
 
-      // Store user info
+     
       this.user = {
         id: data.id,
         username: data.username,
@@ -22,7 +22,7 @@ export const useAuthStore = defineStore("auth", {
         lastName: data.lastName,
       };
 
-      // Save token in Pinia + Cookies
+      
       this.token = data.accessToken;
       VueCookies.set("token", data.accessToken);
     },
