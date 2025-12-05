@@ -1,4 +1,4 @@
-#make sqlite connection
+
 
 from sqlmodel import SQLModel, create_engine, Session
 
