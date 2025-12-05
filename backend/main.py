@@ -1,51 +1,71 @@
-##routes ,cors
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session
 from database import init_db, get_session
-from models import Todo
+from models import Todo, TodoRead, TodoCreate, TodoUpdate
 import crud
-from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+api = FastAPI()
 
-# Allow Vue frontend to call backend
-app.add_middleware(
+# Allow Vue frontend
+api.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # allow Vue dev server
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-@app.on_event("startup")
+
+@api.on_event("startup")
 def on_startup():
     init_db()
 
-@app.get("/todos")
+
+# ----------------------
+# LIST TODOS
+# ----------------------
+@api.get("/todos", response_model=list[TodoRead])
 def list_todos(session: Session = Depends(get_session)):
     return crud.get_todos(session)
 
-@app.post("/todos")
-def create_new(todo: Todo, session: Session = Depends(get_session)):
+
+# ----------------------
+# CREATE TODO
+# ----------------------
+@api.post("/todos", response_model=TodoRead)
+def create_new(todo: TodoCreate, session: Session = Depends(get_session)):
     return crud.create_todo(session, todo)
 
-@app.get("/todos/{todo_id}")
-def get_one(todo_id: str, session: Session = Depends(get_session)):
+
+# ----------------------
+# GET ONE TODO
+# ----------------------
+@api.get("/todos/{todo_id}", response_model=TodoRead)
+def get_one(todo_id: int, session: Session = Depends(get_session)):
     todo = crud.get_todo(session, todo_id)
     if not todo:
-        raise HTTPException(404, "Todo not found")
+        raise HTTPException(status_code=404, detail="Todo not found")
     return todo
 
-@app.put("/todos/{todo_id}")
-def update(todo_id: str, data: dict, session: Session = Depends(get_session)):
+
+# ----------------------
+# UPDATE TODO
+# ----------------------
+@api.put("/todos/{todo_id}", response_model=TodoRead)
+def update(todo_id: int, data: TodoUpdate, session: Session = Depends(get_session)):
     updated = crud.update_todo(session, todo_id, data)
     if not updated:
-        raise HTTPException(404, "Todo not found")
+        raise HTTPException(status_code=404, detail="Todo not found")
     return updated
 
-@app.delete("/todos/{todo_id}")
-def delete(todo_id: str, session: Session = Depends(get_session)):
+
+# ----------------------
+# DELETE TODO
+# ----------------------
+@api.delete("/todos/{todo_id}")
+def delete(todo_id: int, session: Session = Depends(get_session)):
     deleted = crud.delete_todo(session, todo_id)
     if not deleted:
-        raise HTTPException(404, "Todo not found")
+        raise HTTPException(status_code=404, detail="Todo not found")
     return {"message": "Deleted"}
